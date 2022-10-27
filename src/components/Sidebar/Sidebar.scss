@@ -1,0 +1,47 @@
+.dashboard{
+    display:flex;
+}
+main{
+    width: 100%;
+    padding: 20px;
+}
+
+.sidebar{
+    background: #DADADA;
+    color: #242424;
+    height: 100vh;
+    width: 200px;
+    transition: all 0.5s;
+}
+.top_section{
+    display: flex;
+    align-items:center;
+    padding:20px 15px;
+}
+.logo{
+    width: 40px;
+}
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 50px;
+}
+.link{
+    display: flex;
+    color: #242424;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+}
+.link:hover{
+    background:#27ACC7;
+    color: #F3A90D;
+    transition: all 0.5s;
+}
+.active{
+    background: #27ACC7;
+    color: #F3A90D;
+}
+.icon, .link_text{
+    font-size: 20px;
+}
