@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginLogo from "../../assets/loginLogo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.scss";
 
 const Login = () => {
+  const [body, setBody] = useState({ email: "", password: "" });
+
+  const inputChange = ({ target }) => {
+    const { name, value } = target;
+    setBody({ ...body, [name]: value });
+  };
+
+  const onSubmit = () => {
+    console.log(body);
+  };
+
   return (
     <section className='login'>
       <div className='h-100 container-fluid'>
@@ -20,6 +31,9 @@ const Login = () => {
                   id='form3Example3'
                   className='form-control form-control-lg'
                   placeholder='Enter a valid email address'
+                  value={body.email}
+                  onChange={inputChange}
+                  name='email'
                 />
                 <label className='form-label'>Email address</label>
               </div>
@@ -30,12 +44,16 @@ const Login = () => {
                   id='form3Example4'
                   className='form-control form-control-lg'
                   placeholder='Enter password'
+                  value={body.password}
+                  onChange={inputChange}
+                  name='password'
                 />
                 <label className='form-label'>Password</label>
               </div>
 
               <div className='text-center text-lg-center mt-4 pt-2'>
                 <button
+                  onClick={onSubmit()}
                   type='button'
                   className='btn btn-primary btn-lg'
                   style={{

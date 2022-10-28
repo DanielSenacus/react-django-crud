@@ -43,10 +43,11 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
+    'api.system_api'
 
 ]
 
-THIRD_PARTY_APPS = [
+THIRD_PARTY_APPS = [    
     'corsheaders',
     'rest_framework',
 ]
@@ -54,7 +55,7 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
-    'cors.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,8 +91,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'systemdb',
+        'USER': 'postgres',
+        'PASSWORD': 'xxxtentacion100',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -131,6 +136,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'build','../build/static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

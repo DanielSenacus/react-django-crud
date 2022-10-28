@@ -4,11 +4,13 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Sidebar, Navbar } from "./components";
 import { Home, Empresas, Login, Users, Sedes } from "./pages";
 
+import * as server from "./server";
+
 const initialUser = { id: 1, name: "John", roles: "admin" };
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("super");
 
   const login = async () => {
     await setUser({
@@ -16,12 +18,22 @@ const App = () => {
       name: "John",
       roles: "admin",
     });
-    await setUserRole(user.roles);
+    setUserRole(user.roles);
   };
 
-  // useEffect(() => {
-  //   login();
-  // }, []);
+  const getUserList = async () => {
+    try {
+      const res = await server.listUsers();
+      const data = await res.json();
+      console.log(data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserList();
+  }, []);
 
   const logout = () => setUser(null);
 
@@ -31,7 +43,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar setUserRole={setUserRole}></Navbar>
+      <Navbar setUser={setUser} setUserRole={setUserRole}></Navbar>
       <BrowserRouter>
         <Sidebar userRole={userRole}>
           <Routes>
