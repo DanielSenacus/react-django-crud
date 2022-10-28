@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=20)),
                 ('address', models.CharField(max_length=50)),
                 ('email', models.EmailField(max_length=50)),
-                ('location', models.CharField(max_length=50)),
+                ('location', models.CharField(max_length=100)),
                 ('state', models.BooleanField()),
                 ('accessHours', models.DateField()),
                 ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='system_api.companies')),

@@ -26,12 +26,12 @@ class Companies(models.Model):
 
 class AccessLocations(models.Model):
     name = models.CharField(max_length=20)
-    address = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
+    address = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
     company = models.ForeignKey(Companies,on_delete=models.CASCADE, null=False,blank=False)
-    location = models.CharField(max_length=50)
+    location = models.CharField(max_length=200)
     state = models.BooleanField()
-    accessHours = models.DateField()
+    accessHours = models.CharField(max_length=100)
 
 class AccessHours(models.Model):
     accesspoint = models.ForeignKey(AccessLocations,on_delete=models.CASCADE, null=False,blank=False)

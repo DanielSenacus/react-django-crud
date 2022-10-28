@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import LoginLogo from "../../assets/loginLogo.png";
+import * as server from "../../server";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.scss";
 
-const Login = () => {
+const Login = ({ setUser, setAuth }) => {
   const [body, setBody] = useState({ email: "", password: "" });
 
   const inputChange = ({ target }) => {
@@ -11,8 +12,20 @@ const Login = () => {
     setBody({ ...body, [name]: value });
   };
 
-  const onSubmit = () => {
-    console.log(body);
+  const onSubmit = async (body) => {
+    try {
+      const res = await server.checkAccount(body);
+      const data = await res.json();
+      console.log(data);
+      if (data.auth == false) {
+        return console.log("pailas");
+      }
+
+      setUser(data.user[0]);
+      setAuth(data.auth);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ const Login = () => {
 
               <div className='text-center text-lg-center mt-4 pt-2'>
                 <button
-                  onClick={onSubmit()}
+                  onClick={() => onSubmit(body)}
                   type='button'
                   className='btn btn-primary btn-lg'
                   style={{

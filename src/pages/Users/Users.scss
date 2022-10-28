@@ -1,0 +1,16 @@
+.users_section{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    
+}
+
+.title {
+    display: flex;
+    button{
+        border-radius: 30px;
+        padding: 1rem;
+        background-color: green;
+        font-weight: 700;
+    }
+}

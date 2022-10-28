@@ -5,17 +5,17 @@ import NiceLogo from "../../assets/NiceLogo";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 
-const Sidebar = ({ children, userRole }) => {
+const Sidebar = ({ children, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   let menuItem = [];
 
-  if (userRole == "super") {
+  if (user.roles == "super") {
     menuItem = itemList.superUserList;
-  } else if (userRole == "admin") {
+  } else if (user.roles == "admin") {
     menuItem = itemList.adminList;
-  } else if (userRole == "user") {
+  } else if (user.roles == "employee") {
     menuItem = itemList.userList;
   }
 
@@ -33,22 +33,23 @@ const Sidebar = ({ children, userRole }) => {
             <FaBars onClick={toggle} />
           </div>
         </div>
-        {menuItem.map((item, index) => (
-          <NavLink
-            to={item.path}
-            key={index}
-            className='link'
-            activeclassname='active'
-          >
-            <div className='icon'>{item.icon}</div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className='link_text'
+        {user.roles &&
+          menuItem.map((item, index) => (
+            <NavLink
+              to={item.path}
+              key={index}
+              className='link'
+              activeclassname='active'
             >
-              {item.name}
-            </div>
-          </NavLink>
-        ))}
+              <div className='icon'>{item.icon}</div>
+              <div
+                style={{ display: isOpen ? "block" : "none" }}
+                className='link_text'
+              >
+                {item.name}
+              </div>
+            </NavLink>
+          ))}
       </div>
       <main>{children}</main>
     </div>

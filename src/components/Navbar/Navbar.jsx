@@ -2,11 +2,7 @@ import React from "react";
 import "./Navbar.scss";
 import { GrLogout } from "react-icons/gr";
 
-const Navbar = ({ setUserRole, setUser }) => {
-  const logOut = () => {
-    setUser(null);
-    setUserRole(null);
-  };
+const Navbar = ({ logOut }) => {
   return (
     <nav>
       <div className='navbar-header'></div>
