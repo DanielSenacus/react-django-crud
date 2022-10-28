@@ -10,7 +10,7 @@ In the project directory, you can run:
 
 Make sure you install all the dependencies using:
 
-### `npm install` `pyp install - requirements.txt`
+### `npm install` `pyp install -r requirements.txt`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
