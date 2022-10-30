@@ -8,72 +8,85 @@ import * as server from "./server";
 
 const initialUser = { id: 1, name: "John", roles: "super" };
 
+const setToken = (authToken) => {
+    sessionStorage.setItem("token", JSON.stringify(authToken));
+};
+
 const App = () => {
-  const [user, setUser] = useState(initialUser);
-  const [auth, setAuth] = useState(false);
-  const [usersList, setUsersList] = useState([]);
+    const [user, setUser] = useState(initialUser);
+    const [auth, setAuth] = useState(false);
+    const [usersList, setUsersList] = useState([]);
 
-  const getUserList = async () => {
-    try {
-      const res = await server.listUsers();
-      const data = await res.json();
-      console.log(data);
-      setUsersList(data);
-    } catch (error) {
-      console.log(error);
+    const getUserList = async () => {
+        try {
+            const res = await server.listUsers();
+            const data = await res.json();
+            console.log(data);
+            setUsersList(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getUserList();
+    }, []);
+
+    const logOut = () => {
+        setUser(null);
+        setAuth(false);
+    };
+
+    if (auth) {
+        return (
+            <>
+                <Navbar logOut={logOut}></Navbar>
+                <BrowserRouter>
+                    <Sidebar user={user}>
+                        <Routes>
+                            <Route
+                                path='/home'
+                                element={<Home user={user} />}
+                            />
+                            <Route
+                                path='/empresas'
+                                element={
+                                    <ProtectedRoute
+                                        redirectTo='/home'
+                                        isAllowed={
+                                            !!auth &&
+                                            user.roles.includes("super")
+                                        }
+                                    >
+                                        <Empresas />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path='/users'
+                                element={
+                                    <ProtectedRoute
+                                        redirectTo='/home'
+                                        isAllowed={
+                                            !!auth &&
+                                            user.roles.includes("super")
+                                        }
+                                    >
+                                        <Users usersList={usersList} />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route path='/empresas/sedes' element={<Sedes />} />
+                        </Routes>
+                    </Sidebar>
+                    <Routes>
+                        <Route path='/login' element={<Login />} />
+                    </Routes>
+                </BrowserRouter>
+            </>
+        );
     }
-  };
-
-  useEffect(() => {
-    getUserList();
-  }, []);
-
-  const logOut = () => {
-    setUser(null);
-    setAuth(false);
-  };
-
-  if (auth) {
-    return (
-      <>
-        <Navbar logOut={logOut}></Navbar>
-        <BrowserRouter>
-          <Sidebar user={user}>
-            <Routes>
-              <Route path='/home' element={<Home user={user} />} />
-              <Route
-                path='/empresas'
-                element={
-                  <ProtectedRoute
-                    redirectTo='/home'
-                    isAllowed={!!auth && user.roles.includes("super")}
-                  >
-                    <Empresas />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path='/users'
-                element={
-                  <ProtectedRoute
-                    redirectTo='/home'
-                    isAllowed={!!auth && user.roles.includes("super")}
-                  >
-                    <Users usersList={usersList} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path='/empresas/sedes' element={<Sedes />} />
-            </Routes>
-          </Sidebar>
-          <Routes>
-            <Route path='/login' element={<Login />} />
-          </Routes>
-        </BrowserRouter>
-      </>
-    );
-  }
-  return <Login setAuth={setAuth} setUser={setUser}></Login>;
+    return <Login setAuth={setAuth} setUser={setUser}></Login>;
 };
 
 export default App;

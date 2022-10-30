@@ -1,0 +1,49 @@
+// :root {
+//     --gradient: linear-gradient(
+//         to left top,
+//         #dd2476 10%,
+//         #ff512f 90%
+//     ) !important;
+// }
+
+// .card {
+//     background: #222;
+//     border: 1px solid #dd2476;
+//     color: #242424;
+//     margin-bottom: 2rem;
+// }
+
+// .btn-card {
+//     border: 5px solid;
+//     border-image-slice: 1;
+//     background: var(--gradient) !important;
+//     -webkit-background-clip: text !important;
+//     -webkit-text-fill-color: transparent !important;
+//     border-image-source: var(--gradient) !important;
+//     text-decoration: none;
+//     transition: all 0.4s ease;
+// }
+
+// .btn-card:hover,
+// .btn-card:focus {
+//     background: var(--gradient) !important;
+//     -webkit-background-clip: none !important;
+//     -webkit-text-fill-color: #fff !important;
+//     border: 5px solid #fff !important;
+//     box-shadow: #222 1px 0 10px;
+//     text-decoration: underline;
+// }
+
+// /* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+// @media screen and (min-width: 601px) {
+//     h1 {
+//         font-size: 30px;
+//     }
+// }
+
+// /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+// @media screen and (max-width: 600px) {
+//     h1 {
+//         font-size: 10px;
+//     }
+// }
