@@ -29,6 +29,10 @@ const Users = () => {
     }
   };
 
+  // const itsDaniel = (id) => {
+  //   if (id === 1);
+  // };
+
   useEffect(() => {
     getUserList();
   }, []);
@@ -71,7 +75,7 @@ const Users = () => {
                     onClick={() => deleteUser(user.id)}
                     className='btn btn-primary btn-danger'
                   >
-                    Eliminar
+                    Eliminar Usuario
                   </button>
                 </td>
               </tr>

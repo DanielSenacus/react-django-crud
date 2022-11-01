@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import * as server from "../../server";
 import { Alert } from "@mui/material";
 import CloseButton from "react-bootstrap/CloseButton";
-import "./UserModal.scss";
-import CompanyDropDown from "../AdminDropDown/CompanyDropDown";
+import "./EmployeeModal.scss";
 
-const initialValues = {
-  email: "",
-  password: "",
-  phone: "",
-  address: "",
-  company: "",
-  roles: "admin",
-  name: "",
-  lastname: "",
-};
+const EmployeeModal = ({ user, setCreateEmployee }) => {
+  const initialValues = {
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    company: user.company,
+    roles: "employee",
+    name: "",
+    lastname: "",
+  };
 
-const UserModal = ({ setCreateUser }) => {
   const [error, setError] = useState(false);
   const [body, setBody] = useState(initialValues);
 
@@ -27,19 +26,9 @@ const UserModal = ({ setCreateUser }) => {
 
   const validateForm = (body) => {
     let isEmpty = [];
-    const { name, lastname, email, password, phone, address, company, roles } =
-      body;
+    const { name, lastname, email, password, phone, address } = body;
 
-    const fieldValues = [
-      name,
-      lastname,
-      email,
-      phone,
-      password,
-      address,
-      company,
-      roles,
-    ];
+    const fieldValues = [name, lastname, email, phone, password, address];
 
     fieldValues.map((value) => {
       if (value === "" || value == null) {
@@ -66,15 +55,16 @@ const UserModal = ({ setCreateUser }) => {
       const res = await server.RegisterUser(body);
       const data = await res.json();
       console.log(data);
-      setCreateUser(false);
+      setCreateEmployee(false);
       setBody(initialValues);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div>
-      <section className='vh-100 gradient-custom'>
+      <section className='vh-100 gradient-custom-employee'>
         <div className='container py-5 h-100'>
           <div className='row justify-content-center align-items-center h-100'>
             <div className='col-12 col-lg-9 col-xl-7'>
@@ -89,9 +79,9 @@ const UserModal = ({ setCreateUser }) => {
                 )}
                 <div className='card-body p-4 p-md-5'>
                   <div className='form_title'>
-                    <h3>Registrar Admnistrador</h3>
+                    <h3>Registrar Empleado</h3>
                     <CloseButton
-                      onClick={() => setCreateUser(false)}
+                      onClick={() => setCreateEmployee(false)}
                       className='btn btn-primary btn-danger'
                     ></CloseButton>
                   </div>
@@ -144,10 +134,14 @@ const UserModal = ({ setCreateUser }) => {
                       </div>
                       <div className='col-md-6 mb-4 pb-2'>
                         <div className='form-outline'>
-                          <CompanyDropDown
-                            body={body}
-                            setBody={setBody}
-                          ></CompanyDropDown>
+                          <input
+                            className='form-control form-control-lg'
+                            value={body.phone}
+                            onChange={inputChange}
+                            name='phone'
+                            required
+                          />
+                          <label className='form-label'>Telefono</label>
                         </div>
                       </div>
                     </div>
@@ -170,20 +164,6 @@ const UserModal = ({ setCreateUser }) => {
                       <div className='col-md-6 mb-4 pb-2'>
                         <div className='form-outline'>
                           <input
-                            className='form-control form-control-lg'
-                            value={body.phone}
-                            onChange={inputChange}
-                            name='phone'
-                            required
-                          />
-                          <label className='form-label'>Telefono</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-md-6 mb-4 pb-2'>
-                        <div className='form-outline'>
-                          <input
                             type='password'
                             className='form-control form-control-lg'
                             value={body.password}
@@ -194,7 +174,8 @@ const UserModal = ({ setCreateUser }) => {
                           <label className='form-label'>Contraseña</label>
                         </div>
                       </div>
-
+                    </div>
+                    <div className='row'>
                       <div className='col-md-6 mb-4 pb-2'>
                         <button
                           className='btn btn-primary btn-lg'
@@ -217,5 +198,4 @@ const UserModal = ({ setCreateUser }) => {
     </div>
   );
 };
-
-export default UserModal;
+export default EmployeeModal;

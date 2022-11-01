@@ -1,6 +1,7 @@
 const API_URL_USERS = "http://127.0.0.1:8000/usuarios/";
 const API_URL_EMAIL = "http://127.0.0.1:8000/login";
 const API_URL_COMPANY = "http://127.0.0.1:8000/company";
+const API_URL_COMPANY_D = "http://127.0.0.1:8000/company/";
 const API_URL_USERS_D = "http://127.0.0.1:8000/usuariosdelete/";
 export const listUsers = async () => {
   return await fetch(API_URL_USERS);
@@ -68,6 +69,13 @@ export const AdminList = async () => {
 export const DeleteUser = async (id) => {
   console.log(`${API_URL_USERS_D}${id}`);
   return await fetch(`${API_URL_USERS_D}${id}`, {
+    method: "DELETE",
+  });
+};
+
+export const DeleteCompany = async (id) => {
+  console.log(`${API_URL_COMPANY_D}${id}`);
+  return await fetch(`${API_URL_COMPANY_D}${id}`, {
     method: "DELETE",
   });
 };

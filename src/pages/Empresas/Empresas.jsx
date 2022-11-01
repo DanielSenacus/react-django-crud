@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import CloseButton from "react-bootstrap/CloseButton";
 import * as server from "../../server";
+import "./Empresas.scss";
 
 const Empresas = () => {
   const [companyList, setCompanyList] = useState([]);
@@ -11,6 +13,17 @@ const Empresas = () => {
       const data = await res.json();
       console.log(data);
       setCompanyList(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteCompany = async (id) => {
+    try {
+      const res = await server.DeleteCompany(id);
+      const data = await res.json();
+      await console.log(data);
+      getCompanyList(data);
     } catch (error) {
       console.log(error);
     }
@@ -31,20 +44,21 @@ const Empresas = () => {
             {companyList.map((company) => (
               <div className='c-dashboardInfo col-lg-3 col-md-6'>
                 <div className='wrap'>
-                  <h4 className='heading heading5 hind-font medium-font-weight c-dashboardInfo__title'>
-                    {company.companysName}
-                  </h4>
-                  <div className='company_section'>
+                  <div className='wrap_header'>
+                    <h4 className='heading heading5 hind-font medium-font-weight c-dashboardInfo__title'>
+                      {company.companysName}
+                    </h4>
+                  </div>
+                  <div className=' company_section'>
                     <Table responsive striped bordered hover size='sm'>
                       <th>
                         <tr>#</tr>
                         <tr>Nombre</tr>
-                        <tr>Nombre Comercial</tr>
+                        <tr>Marca</tr>
                         <tr>nit</tr>
                         <tr>Direccion</tr>
-                        <tr>Dirección</tr>
-                        <tr>Email</tr>
                         <tr>Telefono</tr>
+                        <tr>Email</tr>
                         <tr>Localidad</tr>
                       </th>
 
@@ -54,12 +68,18 @@ const Empresas = () => {
                         <tr>{company.companysBrandName}</tr>
                         <tr>{company.nit}</tr>
                         <tr>{company.address}</tr>
-                        <tr>{company.emaik}</tr>
                         <tr>{company.phone}</tr>
+                        <tr>{company.email}</tr>
                         <tr>{company.location}</tr>
                       </th>
                     </Table>
                   </div>
+                  <button
+                    onClick={() => deleteCompany(company.id)}
+                    className='btn btn-primary btn-danger'
+                  >
+                    Eliminar Empresa
+                  </button>
                 </div>
               </div>
             ))}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as server from "../../server";
 import { Alert } from "@mui/material";
+import CloseButton from "react-bootstrap/CloseButton";
 import "./CompanyModal.scss";
 import AdminDropDown from "../AdminDropDown/AdminDropDown";
 
@@ -78,7 +79,7 @@ const CompanyModal = ({ setCreateCompany }) => {
   };
   return (
     <div>
-      <section className='vh-100 gradient-custom'>
+      <section className='vh-100 gradient-custom-company'>
         <div className='container py-5 h-100'>
           <div className='row justify-content-center align-items-center h-100'>
             <div className='col-12 col-lg-9 col-xl-7'>
@@ -94,12 +95,10 @@ const CompanyModal = ({ setCreateCompany }) => {
                 <div className='card-body p-4 p-md-5'>
                   <div className='form_title'>
                     <h3>Registrar Empresa</h3>
-                    <button
+                    <CloseButton
                       onClick={() => setCreateCompany(false)}
                       className='btn btn-primary btn-danger'
-                    >
-                      X
-                    </button>
+                    ></CloseButton>
                   </div>
                   <form onSubmit={(e) => e.preventDefault()}>
                     <div className='row'>

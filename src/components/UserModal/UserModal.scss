@@ -1,19 +1,19 @@
 .gradient-custom {
     /* fallback for old browsers */
-    background: dodgerblue;
+    background: rgb(15, 169, 31);
     color: #242424;
 
     /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(
         to bottom right,
-        rgb(93, 16, 207),
+        rgb(24, 218, 10),
         rgb(22, 10, 78)
     );
 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(
         to bottom right,
-        rgb(93, 16, 207),
+        rgb(24, 218, 10),
         rgb(22, 10, 78)
     );
 }

@@ -58,6 +58,19 @@ def companyApi(request,id=0):
         
     else:
         return JsonResponse({'message':"Invalid method"},safe=False)
+    
+@csrf_exempt
+def companyEditApi(request,id):
+    if request.method=='DELETE':        
+        deleteCompany = list(Companies.objects.filter(id=id).values())
+        if len(deleteCompany) > 0:
+            Companies.objects.filter(id=id).delete()
+            datos = {'message':"Company deleted successfully"}
+        else:
+            datos = {'message':"Company not found"}
+        return JsonResponse(datos)
+    else:
+        return JsonResponse({'message':"Invalid method"},safe=False)       
 
         
        

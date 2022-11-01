@@ -14,7 +14,7 @@ class Users(models.Model):
     location = models.CharField(max_length=100)
 
 class Companies(models.Model):
-    adminUser = models.ForeignKey(Users,on_delete=models.CASCADE, null=False,blank=False)
+    adminUser = models.ForeignKey(Users,on_delete=models.DO_NOTHING, null=False,blank=False)
     nit = models.IntegerField()
     companysName = models.CharField(max_length=50)
     companysBrandName = models.CharField(max_length=50)
@@ -25,7 +25,7 @@ class Companies(models.Model):
     location = models.CharField(max_length=100)
 
 class AccessLocations(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     company = models.ForeignKey(Companies,on_delete=models.CASCADE, null=False,blank=False)

@@ -1,19 +1,19 @@
-.gradient-custom-company {
+.gradient-custom-employee {
     /* fallback for old browsers */
-    background: rgb(20, 11, 187);
+    background: rgb(160, 7, 187);
     color: #242424;
 
     /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(
         to bottom right,
-        rgb(20, 11, 187),
+        rgb(160, 7, 187),
         rgb(22, 10, 78)
     );
 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(
         to bottom right,
-        rgb(20, 11, 187),
+        rgb(160, 7, 187),
         rgb(22, 10, 78)
     );
 }

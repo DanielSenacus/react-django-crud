@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Sidebar, Navbar } from "./components";
 import { Home, Empresas, Login, Users, Sedes } from "./pages";
+import QrPage from "./pages/qrPage/QrPage";
 
 import * as server from "./server";
 
@@ -56,6 +57,9 @@ const App = () => {
                 }
               />
               <Route path='/empresas/sedes' element={<Sedes />} />
+            </Routes>
+            <Routes>
+              <Route path='/code' element={<QrPage />} />
             </Routes>
           </Sidebar>
           <Routes>
