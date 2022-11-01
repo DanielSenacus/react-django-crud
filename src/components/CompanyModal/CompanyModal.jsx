@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import * as server from "../../server";
 import { Alert } from "@mui/material";
-import "./UserModal.scss";
-import CompanyDropDown from "../AdminDropDown/CompanyDropDown";
+import "./CompanyModal.scss";
+import AdminDropDown from "../AdminDropDown/AdminDropDown";
 
-const initialValues = {
-  email: "",
-  password: "",
-  phone: "",
-  address: "",
-  company: "",
-  roles: "admin",
-  name: "",
-  lastname: "",
-};
-
-const UserModal = ({ setCreateUser }) => {
+const CompanyModal = ({ setCreateCompany }) => {
   const [error, setError] = useState(false);
-  const [body, setBody] = useState(initialValues);
+  const [body, setBody] = useState({
+    adminUser: "",
+    nit: "",
+    email: "",
+    phone: "",
+    companysName: "",
+    address: "",
+    companysBrandName: "",
+    webstie: "",
+  });
 
   const inputChange = ({ target }) => {
     const { name, value } = target;
@@ -26,18 +24,26 @@ const UserModal = ({ setCreateUser }) => {
 
   const validateForm = (body) => {
     let isEmpty = [];
-    const { name, lastname, email, password, phone, address, company, roles } =
-      body;
-
-    const fieldValues = [
-      name,
-      lastname,
+    const {
+      adminUser,
+      nit,
       email,
       phone,
-      password,
+      companysName,
       address,
-      company,
-      roles,
+      companysBrandName,
+      webstie,
+    } = body;
+
+    const fieldValues = [
+      adminUser,
+      nit,
+      email,
+      phone,
+      companysName,
+      address,
+      companysBrandName,
+      webstie,
     ];
 
     fieldValues.map((value) => {
@@ -52,7 +58,7 @@ const UserModal = ({ setCreateUser }) => {
     return false;
   };
 
-  const RegisterUser = async (body) => {
+  const CreateCompany = async (body) => {
     if (validateForm(body)) {
       setError(true);
       return;
@@ -62,11 +68,10 @@ const UserModal = ({ setCreateUser }) => {
     console.log(body);
 
     try {
-      const res = await server.RegisterUser(body);
+      const res = await server.RegisterCompany(body);
       const data = await res.json();
-      console.log(data);
-      setCreateUser(false);
-      setBody(initialValues);
+      console.log(res);
+      setCreateCompany(false);
     } catch (error) {
       console.log(error);
     }
@@ -88,9 +93,9 @@ const UserModal = ({ setCreateUser }) => {
                 )}
                 <div className='card-body p-4 p-md-5'>
                   <div className='form_title'>
-                    <h3>Registrar Admnistrador</h3>
+                    <h3>Registrar Empresa</h3>
                     <button
-                      onClick={() => setCreateUser(false)}
+                      onClick={() => setCreateCompany(false)}
                       className='btn btn-primary btn-danger'
                     >
                       X
@@ -99,18 +104,10 @@ const UserModal = ({ setCreateUser }) => {
                   <form onSubmit={(e) => e.preventDefault()}>
                     <div className='row'>
                       <div className='col-md-6 mb-4'>
-                        <div className='form-outline'>
-                          <input
-                            type='text'
-                            id='firstName'
-                            className='form-control form-control-lg'
-                            value={body.name}
-                            onChange={inputChange}
-                            name='name'
-                            required
-                          />
-                          <label className='form-label'>Nombres</label>
-                        </div>
+                        <AdminDropDown
+                          body={body}
+                          setBody={setBody}
+                        ></AdminDropDown>
                       </div>
                       <div className='col-md-6 mb-4'>
                         <div className='form-outline'>
@@ -118,12 +115,12 @@ const UserModal = ({ setCreateUser }) => {
                             type='text'
                             id='lastName'
                             className='form-control form-control-lg'
-                            value={body.lastname}
+                            value={body.nit}
                             onChange={inputChange}
-                            name='lastname'
+                            name='nit'
                             required
                           />
-                          <label className='form-label'>Apellidos</label>
+                          <label className='form-label'>Nit</label>
                         </div>
                       </div>
                     </div>
@@ -145,10 +142,16 @@ const UserModal = ({ setCreateUser }) => {
                       </div>
                       <div className='col-md-6 mb-4 pb-2'>
                         <div className='form-outline'>
-                          <CompanyDropDown
-                            body={body}
-                            setBody={setBody}
-                          ></CompanyDropDown>
+                          <input
+                            className='form-control form-control-lg'
+                            value={body.companysName}
+                            onChange={inputChange}
+                            name='companysName'
+                            required
+                          />
+                          <label className='form-label'>
+                            Nombre de Empresa
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -172,6 +175,35 @@ const UserModal = ({ setCreateUser }) => {
                         <div className='form-outline'>
                           <input
                             className='form-control form-control-lg'
+                            value={body.companysBrandName}
+                            onChange={inputChange}
+                            name='companysBrandName'
+                            type='text'
+                            required
+                          />
+                          <label className='form-label'>Nombre Comercial</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className='row'>
+                      <div className='col-md-6 mb-4 pb-2'>
+                        <div className='form-outline'>
+                          <input
+                            type='url'
+                            className='form-control form-control-lg'
+                            value={body.webstie}
+                            onChange={inputChange}
+                            name='webstie'
+                            required
+                          />
+                          <label className='form-label'>Website</label>
+                        </div>
+                      </div>
+                      <div className='col-md-6 mb-4 pb-2'>
+                        <div className='form-outline'>
+                          <input
+                            type='phone'
+                            className='form-control form-control-lg'
                             value={body.phone}
                             onChange={inputChange}
                             name='phone'
@@ -180,31 +212,16 @@ const UserModal = ({ setCreateUser }) => {
                           <label className='form-label'>Telefono</label>
                         </div>
                       </div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-md-6 mb-4 pb-2'>
-                        <div className='form-outline'>
-                          <input
-                            type='password'
-                            className='form-control form-control-lg'
-                            value={body.password}
-                            onChange={inputChange}
-                            name='password'
-                            required
-                          />
-                          <label className='form-label'>Contraseña</label>
-                        </div>
-                      </div>
 
                       <div className='col-md-6 mb-4 pb-2'>
                         <button
                           className='btn btn-primary btn-lg'
                           type='submit'
                           value='Crear'
-                          onClick={() => RegisterUser(body)}
+                          onClick={() => CreateCompany(body)}
                           required
                         >
-                          Crear Usuario
+                          Crear Empresa
                         </button>
                       </div>
                     </div>
@@ -219,4 +236,4 @@ const UserModal = ({ setCreateUser }) => {
   );
 };
 
-export default UserModal;
+export default CompanyModal;
