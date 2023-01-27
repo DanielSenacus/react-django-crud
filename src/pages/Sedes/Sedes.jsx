@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sedes = () => {
-  return <div>Sedes</div>;
+  return <div></div>;
 };
 
 export default Sedes;

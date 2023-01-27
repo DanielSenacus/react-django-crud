@@ -4,8 +4,48 @@ import CloseButton from "react-bootstrap/CloseButton";
 import * as server from "../../server";
 import "./Empresas.scss";
 
+const companyData = [
+  {
+    id: "1",
+    companysName: "Blacksmith Agency",
+    companysBrandName: "Blacksmith",
+    nit: "4471651489",
+    address: "",
+    email: "",
+    location: "3",
+  },
+  {
+    id: "2",
+    companysName: "Joyas Maggia",
+    companysBrandName: "Maggia",
+    nit: "318745926",
+    address: "",
+    email: "",
+    location: "2",
+  },
+  {
+    id: "3",
+    companysName: "Alicante S.A.S",
+    companysBrandName: "Alicante",
+    nit: "35127896",
+    address: "",
+    email: "",
+    location: "1",
+  },
+  {
+    id: "4",
+    companysName: "Lucio-Licores",
+    companysBrandName: "Lucio licores",
+    nit: "195872364",
+    address: "",
+    email: "",
+    location: "1",
+  },
+];
+
 const Empresas = () => {
-  const [companyList, setCompanyList] = useState([]);
+  const [companyList, setCompanyList] = useState(companyData);
+  console.log(companyList);
 
   const getCompanyList = async () => {
     try {
@@ -19,14 +59,17 @@ const Empresas = () => {
   };
 
   const deleteCompany = async (id) => {
-    try {
-      const res = await server.DeleteCompany(id);
-      const data = await res.json();
-      await console.log(data);
-      getCompanyList(data);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const res = await server.DeleteCompany(id);
+    //   const data = await res.json();
+    //   await console.log(data);
+    //   getCompanyList(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    const newList = companyList.filter((item) => item.id !== id);
+    setCompanyList(newList);
   };
 
   useEffect(() => {
@@ -38,53 +81,41 @@ const Empresas = () => {
       <div className='title'>
         <h1>Empresas</h1>
       </div>
-      <div id='root'>
-        <div className='container pt-5'>
-          <div className='row align-items-stretch'>
+      <div className='users_section'>
+        <Table striped bordered hover size='sm'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Marca</th>
+              <th>Nit</th>
+              <th>Direccion</th>
+              <th>Email</th>
+              <th>Localidad</th>
+            </tr>
+          </thead>
+          <tbody>
             {companyList.map((company) => (
-              <div className='c-dashboardInfo col-lg-3 col-md-6'>
-                <div className='wrap'>
-                  <div className='wrap_header'>
-                    <h4 className='heading heading5 hind-font medium-font-weight c-dashboardInfo__title'>
-                      {company.companysName}
-                    </h4>
-                  </div>
-                  <div className=' company_section'>
-                    <Table responsive striped bordered hover size='sm'>
-                      <th>
-                        <tr>#</tr>
-                        <tr>Nombre</tr>
-                        <tr>Marca</tr>
-                        <tr>nit</tr>
-                        <tr>Direccion</tr>
-                        <tr>Telefono</tr>
-                        <tr>Email</tr>
-                        <tr>Localidad</tr>
-                      </th>
-
-                      <th key={company.id}>
-                        <tr>{company.id}</tr>
-                        <tr>{company.companysName}</tr>
-                        <tr>{company.companysBrandName}</tr>
-                        <tr>{company.nit}</tr>
-                        <tr>{company.address}</tr>
-                        <tr>{company.phone}</tr>
-                        <tr>{company.email}</tr>
-                        <tr>{company.location}</tr>
-                      </th>
-                    </Table>
-                  </div>
+              <tr key={company.id}>
+                <td>{company.id}</td>
+                <td>{company.companysName}</td>
+                <td>{company.companysBrandName}</td>
+                <td>{company.nit}</td>
+                <td>{company.address}</td>
+                <td>{company.email}</td>
+                <td>{company.location}</td>
+                <td>
                   <button
                     onClick={() => deleteCompany(company.id)}
                     className='btn btn-primary btn-danger'
                   >
                     Eliminar Empresa
                   </button>
-                </div>
-              </div>
+                </td>
+              </tr>
             ))}
-          </div>
-        </div>
+          </tbody>
+        </Table>
       </div>
     </section>
   );

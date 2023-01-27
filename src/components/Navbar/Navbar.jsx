@@ -8,8 +8,10 @@ const Navbar = ({ logOut }) => {
       <div className='navbar-header'></div>
 
       <button className='navbar-logout' onClick={() => logOut()}>
-        <GrLogout></GrLogout>
-        <span>Logout</span>
+        <div className='message'>
+          <GrLogout></GrLogout>
+          Log Out
+        </div>
       </button>
     </nav>
   );
